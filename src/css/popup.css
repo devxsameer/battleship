@@ -1,0 +1,74 @@
+.pop-up {
+  position: fixed;
+  opacity: 0;
+  z-index: -100;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #0000009a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pop-up.active {
+  z-index: 10000;
+  opacity: 1;
+}
+.pop-up-box {
+  background: var(--color-foreground);
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  min-width: min(90vw, 500px);
+  justify-content: center;
+  text-align: center;
+  gap: 0.5rem;
+}
+.pop-up.initial .pop-up-box {
+  text-align: left;
+}
+.pop-up-box .pop-up-heading {
+  font-size: 1.6rem;
+  text-transform: capitalize;
+  font-weight: 600;
+}
+.pop-up-box fieldset {
+  display: none;
+  border-radius: 0.2rem;
+}
+.pop-up-box input {
+  font: inherit;
+  background: inherit;
+  font-size: 1rem;
+  color: inherit;
+  border: none;
+  padding: 0.5em;
+  outline: none;
+  width: 100%;
+}
+.pop-up-box input::placeholder {
+  color: var(--color-text-light);
+}
+.pop-up-btns {
+  margin-top: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+.pop-up.initial .pop-up-btns {
+  justify-content: flex-end;
+}
+.confirm-name-btn {
+  display: none;
+}
+.pop-up.initial .pop-up-box fieldset,
+.pop-up.initial .confirm-name-btn {
+  display: initial;
+}
+
+.pop-up.initial .play-again-btn {
+  display: none;
+}

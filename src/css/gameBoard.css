@@ -1,0 +1,120 @@
+/* === GRID BOARD === */
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, var(--box-size));
+  grid-template-rows: repeat(10, var(--box-size));
+  position: relative;
+}
+
+/* Cursor interactions */
+.initial .human-board .box {
+  cursor: pointer;
+}
+.human-board.placed .box {
+  cursor: default;
+}
+.computer-board .box {
+  cursor: pointer;
+}
+
+/* Base Box Styling */
+.board .box {
+  background-color: var(--color-foreground-light);
+  border: 2px solid var(--color-foreground);
+  aspect-ratio: 1/1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.board .box::before {
+  content: "";
+  opacity: 0;
+  width: 50%;
+  height: 50%;
+  aspect-ratio: 1/1;
+  background-color: var(--color-text);
+  border-radius: 50%;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* === PREVIEW STATES === */
+.initial .board .box.preview:not(.placed) {
+  background-color: var(--color-text);
+}
+.initial .human-board.placed .box.preview:not(.placed) {
+  background-color: var(--color-foreground-light);
+}
+
+/* === ATTACK STATES === */
+.board .box.attacked::before {
+  background-color: var(--color-text);
+}
+.board .box.hit::before,
+.board .box.sunk::before {
+  background-color: var(--color-error);
+  animation: pulse-hit 0.6s ease;
+  opacity: 1;
+}
+.board .box.miss::before {
+  background-color: #9ca3af; /* gray for miss */
+  opacity: 1;
+  animation: fade-miss 0.4s ease;
+}
+
+/* === SHIPS === */
+.board .ship {
+  position: absolute;
+  z-index: 100;
+  pointer-events: none;
+  background: #fff;
+  top: calc(var(--row) * var(--box-size));
+  left: calc(var(--column) * var(--box-size));
+}
+.board .ship.Y {
+  left: calc(calc(var(--column) + 1) * var(--box-size));
+  transform: rotate(90deg);
+  transform-origin: top left;
+}
+.board .ship.active {
+  opacity: 1;
+}
+.computer-board .ship {
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease-in;
+}
+.computer-board .ship.sunk {
+  opacity: 1;
+}
+
+/* === ANIMATIONS === */
+@keyframes pulse-hit {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+    background-color: #dc2626;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes fade-miss {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes sink {
+  0% {
+    background-color: #ef4444;
+  }
+  100% {
+    background-color: #111827;
+  }
+}
