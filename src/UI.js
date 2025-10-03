@@ -225,6 +225,13 @@ const UI = {
   },
 
   startGame() {
+    if (!this.player.board.allShipsPlaced()) {
+      Render.showInfo(
+        this.infoEl,
+        `Place your ${this.selectedShip} before starting!`
+      );
+      return;
+    }
     // require player instance (created when name is confirmed or during reset)
     if (!this.player) this.player = new Player(this.playerName);
 
